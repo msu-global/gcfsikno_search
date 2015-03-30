@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the gcfsikno_search feature.
+ */
+
+include_once 'gcfsikno_search.features.inc';
