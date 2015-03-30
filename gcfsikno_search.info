@@ -1,4 +1,4 @@
-name = gcfsikno_search
+name = GCFSI Knowledge Platform Search
 description = A Drupal Features module that contains configuration and custom code for the search functionality.
 core = 7.x
 package = GCFSI Knowledge Platform
