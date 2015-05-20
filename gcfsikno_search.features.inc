@@ -41,7 +41,6 @@ function gcfsikno_search_default_search_api_index() {
         "author" : { "type" : "integer", "entity_type" : "user" },
         "field_categories" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
         "field_copyright" : { "type" : "text" },
-        "field_related_event" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "node" },
         "field_related_project" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "node" },
         "og_group_ref" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "node" },
         "search_api_language" : { "type" : "string" },
@@ -171,12 +170,6 @@ function gcfsikno_search_default_search_api_server() {
             "table" : "search_api_db_default_node_index",
             "column" : "taxonomy_forums",
             "type" : "integer",
-            "boost" : "1.0"
-          },
-          "field_related_event" : {
-            "table" : "search_api_db_default_node_index_field_related_event",
-            "column" : "value",
-            "type" : "list\\u003Cinteger\\u003E",
             "boost" : "1.0"
           },
           "og_group_ref" : {
