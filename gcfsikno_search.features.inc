@@ -31,42 +31,35 @@ function gcfsikno_search_views_api($module = NULL, $api = NULL) {
  */
 function gcfsikno_search_default_search_api_index() {
   $items = array();
-  $items['default_node_index'] = entity_import('search_api_index', '{
-    "name" : "Default Node Index",
-    "machine_name" : "default_node_index",
-    "description" : "The default index that contains all nodes on the site.",
-    "server" : "local_database",
+  $items['gcfsikno_node'] = entity_import('search_api_index', '{
+    "name" : "GCFSI Knowledge Platform Node Index",
+    "machine_name" : "gcfsikno_node",
+    "description" : "This index walks through all of the nodes on the site, to make their contents available to the search engine.  Nodes could be blog posts, forum posts, or library resources.\\r\\n\\r\\nAn important thing to consider, is that  some entities are NOT nodes.  Users, flaggings, messages, and other entity types are not captured by this index.",
+    "server" : "gcfsikno_database",
     "item_type" : "node",
     "options" : {
       "index_directly" : 1,
-      "cron_limit" : "200",
+      "cron_limit" : "50",
       "fields" : {
         "author" : { "type" : "integer", "entity_type" : "user" },
+        "author:field_user_bio" : { "type" : "text", "boost" : "0.5" },
+        "author:name" : { "type" : "text" },
+        "body:summary" : { "type" : "text" },
+        "body:value" : { "type" : "text" },
         "field_categories" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
-        "field_copyright" : { "type" : "text" },
-        "field_related_project" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "node" },
-        "og_group_ref" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "node" },
         "search_api_language" : { "type" : "string" },
         "taxonomy_forums" : { "type" : "integer", "entity_type" : "taxonomy_term" },
-        "title" : { "type" : "text", "boost" : "5.0" },
-        "type" : { "type" : "text" }
+        "taxonomy_forums:name" : { "type" : "text", "boost" : "0.8" },
+        "title" : { "type" : "text", "boost" : "5.0" }
       },
       "data_alter_callbacks" : {
         "search_api_alter_bundle_filter" : {
-          "status" : 1,
+          "status" : 0,
           "weight" : "-10",
-          "settings" : {
-            "default" : "0",
-            "bundles" : {
-              "blog" : "blog",
-              "event" : "event",
-              "forum" : "forum",
-              "biblio" : "biblio"
-            }
-          }
+          "settings" : { "default" : "1", "bundles" : [] }
         },
         "search_api_alter_node_access" : { "status" : 0, "weight" : "0", "settings" : [] },
-        "search_api_alter_node_status" : { "status" : 1, "weight" : "0", "settings" : [] },
+        "search_api_alter_node_status" : { "status" : 0, "weight" : "0", "settings" : [] },
         "search_api_alter_add_hierarchy" : { "status" : 0, "weight" : "0", "settings" : { "fields" : [] } },
         "search_api_alter_add_viewed_entity" : { "status" : 0, "weight" : "0", "settings" : { "mode" : "full" } },
         "search_api_alter_add_url" : { "status" : 0, "weight" : "0", "settings" : [] },
@@ -74,30 +67,61 @@ function gcfsikno_search_default_search_api_index() {
       },
       "processors" : {
         "search_api_case_ignore" : {
-          "status" : 1,
+          "status" : 0,
           "weight" : "0",
-          "settings" : { "fields" : { "type" : true, "title" : true, "field_copyright" : true } }
+          "settings" : { "fields" : {
+              "title" : true,
+              "author:name" : true,
+              "author:field_user_bio" : true,
+              "body:value" : true,
+              "body:summary" : true,
+              "taxonomy_forums:name" : true,
+              "field_categories:name" : true
+            }
+          }
         },
         "search_api_html_filter" : {
           "status" : 1,
           "weight" : "10",
           "settings" : {
-            "fields" : { "type" : true, "title" : true, "field_copyright" : true },
+            "fields" : {
+              "body:value" : true,
+              "body:summary" : true,
+              "taxonomy_forums:name" : true,
+              "field_categories:name" : true
+            },
             "title" : 0,
-            "alt" : 1,
+            "alt" : 0,
             "tags" : "h1 = 5\\r\\nh2 = 3\\r\\nh3 = 2\\r\\nstrong = 2\\r\\nb = 2\\r\\nem = 1.5\\r\\nu = 1.5"
           }
         },
         "search_api_transliteration" : {
           "status" : 0,
           "weight" : "15",
-          "settings" : { "fields" : { "type" : true, "title" : true, "field_copyright" : true } }
+          "settings" : { "fields" : {
+              "title" : true,
+              "author:name" : true,
+              "author:field_user_bio" : true,
+              "body:value" : true,
+              "body:summary" : true,
+              "taxonomy_forums:name" : true,
+              "field_categories:name" : true
+            }
+          }
         },
         "search_api_tokenizer" : {
           "status" : 0,
           "weight" : "20",
           "settings" : {
-            "fields" : { "type" : true, "title" : true, "field_copyright" : true },
+            "fields" : {
+              "title" : true,
+              "author:name" : true,
+              "author:field_user_bio" : true,
+              "body:value" : true,
+              "body:summary" : true,
+              "taxonomy_forums:name" : true,
+              "field_categories:name" : true
+            },
             "spaces" : "[^[:alnum:]]",
             "ignorable" : "[\\u0027]"
           }
@@ -106,7 +130,15 @@ function gcfsikno_search_default_search_api_index() {
           "status" : 0,
           "weight" : "30",
           "settings" : {
-            "fields" : { "type" : true, "title" : true, "field_copyright" : true },
+            "fields" : {
+              "title" : true,
+              "author:name" : true,
+              "author:field_user_bio" : true,
+              "body:value" : true,
+              "body:summary" : true,
+              "taxonomy_forums:name" : true,
+              "field_categories:name" : true
+            },
             "file" : "",
             "stopwords" : "but\\r\\ndid\\r\\nthe this that those\\r\\netc"
           }
@@ -126,8 +158,7 @@ function gcfsikno_search_default_search_api_index() {
       }
     },
     "enabled" : "1",
-    "read_only" : "0",
-    "rdf_mapping" : []
+    "read_only" : "0"
   }');
   return $items;
 }
@@ -137,72 +168,74 @@ function gcfsikno_search_default_search_api_index() {
  */
 function gcfsikno_search_default_search_api_server() {
   $items = array();
-  $items['local_database'] = entity_import('search_api_server', '{
-    "name" : "Local Database",
-    "machine_name" : "local_database",
-    "description" : "A search server that resides on the local database.  Meant to be used as a simple server, where high performance and advanced features are not needed.  Does not index within files.",
+  $items['gcfsikno_database'] = entity_import('search_api_server', '{
+    "name" : "GCFSI Knowledge Platform Local Database",
+    "machine_name" : "gcfsikno_database",
+    "description" : "The default database search server.  This server operates on the Drupal database itself, for simplicity and ease of installation.  At a later time, this server can be replaced by an Apache SOLR backend, to increase performance, and allow searching through binary formats, such as documents.\\r\\n\\r\\nTo improve performance, this server only indexes words 3 characters or above, and can search on parts of a word.",
     "class" : "search_api_db_service",
     "options" : {
       "database" : "default:default",
       "min_chars" : "3",
       "partial_matches" : 1,
-      "indexes" : { "default_node_index" : {
-          "type" : {
-            "table" : "search_api_db_default_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
+      "indexes" : { "gcfsikno_node" : {
           "title" : {
-            "table" : "search_api_db_default_node_index_text",
+            "table" : "search_api_db_gcfsikno_node_text",
             "type" : "text",
             "boost" : "5.0"
           },
+          "search_api_language" : {
+            "table" : "search_api_db_gcfsikno_node",
+            "column" : "search_api_language",
+            "type" : "string",
+            "boost" : "1.0"
+          },
+          "author:name" : {
+            "table" : "search_api_db_gcfsikno_node_text",
+            "type" : "text",
+            "boost" : "1.0"
+          },
+          "author:field_user_bio" : {
+            "table" : "search_api_db_gcfsikno_node_text",
+            "type" : "text",
+            "boost" : "0.5"
+          },
+          "body:value" : {
+            "table" : "search_api_db_gcfsikno_node_text",
+            "type" : "text",
+            "boost" : "1.0"
+          },
+          "body:summary" : {
+            "table" : "search_api_db_gcfsikno_node_text",
+            "type" : "text",
+            "boost" : "1.0"
+          },
+          "taxonomy_forums:name" : {
+            "table" : "search_api_db_gcfsikno_node_text",
+            "type" : "text",
+            "boost" : "0.8"
+          },
+          "field_categories" : {
+            "table" : "search_api_db_gcfsikno_node_field_categories",
+            "column" : "value",
+            "type" : "list\\u003Cinteger\\u003E",
+            "boost" : "1.0"
+          },
           "author" : {
-            "table" : "search_api_db_default_node_index",
+            "table" : "search_api_db_gcfsikno_node",
             "column" : "author",
             "type" : "integer",
             "boost" : "1.0"
           },
-          "field_categories" : {
-            "table" : "search_api_db_default_node_index_field_categories",
-            "column" : "value",
-            "type" : "list\\u003Cinteger\\u003E",
-            "boost" : "1.0"
-          },
           "taxonomy_forums" : {
-            "table" : "search_api_db_default_node_index",
+            "table" : "search_api_db_gcfsikno_node",
             "column" : "taxonomy_forums",
             "type" : "integer",
-            "boost" : "1.0"
-          },
-          "og_group_ref" : {
-            "table" : "search_api_db_default_node_index_og_group_ref",
-            "column" : "value",
-            "type" : "list\\u003Cinteger\\u003E",
-            "boost" : "1.0"
-          },
-          "field_related_project" : {
-            "table" : "search_api_db_default_node_index_field_related_project",
-            "column" : "value",
-            "type" : "list\\u003Cinteger\\u003E",
-            "boost" : "1.0"
-          },
-          "field_copyright" : {
-            "table" : "search_api_db_default_node_index_text",
-            "type" : "text",
-            "boost" : "1.0"
-          },
-          "search_api_language" : {
-            "table" : "search_api_db_default_node_index",
-            "column" : "search_api_language",
-            "type" : "string",
             "boost" : "1.0"
           }
         }
       }
     },
-    "enabled" : "1",
-    "rdf_mapping" : []
+    "enabled" : "1"
   }');
   return $items;
 }

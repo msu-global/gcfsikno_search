@@ -13,79 +13,84 @@ function gcfsikno_search_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_disable_search';
+  $strongarm->name = 'search_api_facets_search_ids';
+  $strongarm->value = array(
+    'gcfsikno_node' => array(
+      'search_api_views:gcfsikno_search:page' => 'search_api_views:gcfsikno_search:page',
+      'search_api_views:gcfsikno_search:panel_pane_1' => 'search_api_views:gcfsikno_search:panel_pane_1',
+    ),
+  );
+  $export['search_api_facets_search_ids'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'select2_compression_type';
+  $strongarm->value = 'minified';
+  $export['select2_compression_type'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'select2_disable_jq_version_check';
   $strongarm->value = 0;
-  $export['chosen_disable_search'] = $strongarm;
+  $export['select2_disable_jq_version_check'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_disable_search_threshold';
-  $strongarm->value = '0';
-  $export['chosen_disable_search_threshold'] = $strongarm;
+  $strongarm->name = 'select2_excluded_cleasses';
+  $strongarm->value = '';
+  $export['select2_excluded_cleasses'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_jquery_selector';
-  $strongarm->value = 'select:visible';
-  $export['chosen_jquery_selector'] = $strongarm;
+  $strongarm->name = 'select2_excluded_ids';
+  $strongarm->value = '';
+  $export['select2_excluded_ids'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_minimum_multiple';
-  $strongarm->value = '0';
-  $export['chosen_minimum_multiple'] = $strongarm;
+  $strongarm->name = 'select2_excluded_selectors';
+  $strongarm->value = '';
+  $export['select2_excluded_selectors'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_minimum_single';
-  $strongarm->value = '0';
-  $export['chosen_minimum_single'] = $strongarm;
+  $strongarm->name = 'select2_min_options_count_for_search';
+  $strongarm->value = '6';
+  $export['select2_min_options_count_for_search'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_minimum_width';
-  $strongarm->value = '200';
-  $export['chosen_minimum_width'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_no_results_text';
-  $strongarm->value = 'No results match';
-  $export['chosen_no_results_text'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_placeholder_text_multiple';
-  $strongarm->value = 'Choose some options';
-  $export['chosen_placeholder_text_multiple'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_placeholder_text_single';
-  $strongarm->value = 'Choose an option';
-  $export['chosen_placeholder_text_single'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_search_contains';
-  $strongarm->value = 1;
-  $export['chosen_search_contains'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'chosen_use_theme';
+  $strongarm->name = 'select2_update_settings_by_ajax';
   $strongarm->value = 0;
-  $export['chosen_use_theme'] = $strongarm;
+  $export['select2_update_settings_by_ajax'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'select2_use_for_ac_elements';
+  $strongarm->value = 0;
+  $export['select2_use_for_ac_elements'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'select2_use_for_all_select_elements';
+  $strongarm->value = 0;
+  $export['select2_use_for_all_select_elements'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'select2_use_for_all_select_elements_for_admin_pages';
+  $strongarm->value = 0;
+  $export['select2_use_for_all_select_elements_for_admin_pages'] = $strongarm;
 
   return $export;
 }
