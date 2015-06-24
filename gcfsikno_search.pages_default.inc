@@ -16,7 +16,10 @@ function gcfsikno_search_default_page_manager_pages() {
   $page->admin_title = 'Search';
   $page->admin_description = 'A page that displays a View of search results, which are generated via an exposed filter embedded in the search bar.';
   $page->path = 'search';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array();
   $page->conf = array(

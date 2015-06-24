@@ -24,6 +24,7 @@ features[features_api][] = api:2
 features[page_manager_pages][] = search
 features[search_api_index][] = gcfsikno_node
 features[search_api_server][] = gcfsikno_database
+features[user_permission][] = administer facets
 features[user_permission][] = administer search_api
 features[user_permission][] = administer select2
 features[variable][] = search_api_facets_search_ids
