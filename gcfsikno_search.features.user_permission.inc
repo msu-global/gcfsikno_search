@@ -13,7 +13,9 @@ function gcfsikno_search_user_default_permissions() {
   // Exported permission: 'administer facets'.
   $permissions['administer facets'] = array(
     'name' => 'administer facets',
-    'roles' => array(),
+    'roles' => array(
+      'super user' => 'super user',
+    ),
     'module' => 'facetapi',
   );
 
